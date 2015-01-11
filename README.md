@@ -24,11 +24,11 @@ If the form submission fails, the flow stops at starter method - it will show th
 You can also "decorate" the form-acceptor behavior for failed forms. 
 Use the `rejector` property to point a method which will be executed when form submission fails. This may be useful when you need to show some flash-messages or use some logging.
 
-See the [`PostController`](Resources/example/Controller/PostController.php) class for example how to use those annotations.
+See the [`PostController`](Resources/example/Controller/PostController.php) class for example how to use those annotations. If you want to see how it works, check out the [example symfony-project](https://github.com/thanek/easy-forms-bundle-example) that uses this bundle.
 
 *Note that you need to use the `@Template` annotations in your form-starter controller, because FormListener needs to act before the view is rendered.* 
 
-# Installation
+## Installation
 
 You need to add the following to your `composer.json` file:
 
@@ -60,3 +60,4 @@ new Xis\EasyFormsBundle\XisEasyFormsBundle(),
 ```
 
 And that's it.
+
