@@ -30,18 +30,7 @@ See the [`PostController`](Resources/example/Controller/PostController.php) clas
 
 ## Installation
 
-You need to add the following to your `composer.json` file:
-
-```
-    "repositories": [
-        {
-            "url": "https://github.com/thanek/easy-forms-bundle.git",
-            "type": "git"
-        }
-    ],
-```
-
-in the `require` section, add:
+Just add the following line to the `"require"` section in your composer.json file:
 
 ```
     "xis/easy-forms-bundle": "~0.1"
