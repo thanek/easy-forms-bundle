@@ -1,7 +1,7 @@
 Easy Forms Bundle for Symfony
 =============================
 
-Easy form handling in Symfony controllers.
+Easy form flow handling in Symfony controllers.
 
 Why?
 
