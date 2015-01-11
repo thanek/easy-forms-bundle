@@ -1,0 +1,21 @@
+{
+  "name": "xis/easy-forms-bundle",
+  "type": "symfony-bundle",
+  "description": "Easy forms bundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "xis",
+      "email": "xis@schowek.net"
+    }
+  ],
+  "require": {
+    "php": ">=5.4",
+    "symfony/framework-bundle": "~2.5",
+    "sensio/framework-extra-bundle": "~2.5",
+    "symfony/form": "~2.5"
+  },
+  "autoload": {
+    "psr-4": {"Xis\\EasyFormsBundle\\": ""}
+  }
+}
