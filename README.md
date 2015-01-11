@@ -27,3 +27,36 @@ Use the `rejector` property to point a method which will be executed when form s
 See the [`PostController`](Resources/example/Controller/PostController.php) class for example how to use those annotations.
 
 *Note that you need to use the `@Template` annotations in your form-starter controller, because FormListener needs to act before the view is rendered.* 
+
+# Installation
+
+You need to add the following to your `composer.json` file:
+
+```
+    "repositories": [
+        {
+            "url": "https://github.com/thanek/easy-forms-bundle.git",
+            "type": "git"
+        }
+    ],
+```
+
+in the `require` section, add:
+
+```
+    "xis/easy-forms-bundle": "~0.1"
+```
+
+Don't forget to update composer dependencies:
+
+```
+composer.phar update
+```
+
+Then you need to update your `AppKernel.php` file and enable the bundle by adding the folowing entry to the `$bundles` array in `registerBundles` method:
+
+```
+new Xis\EasyFormsBundle\XisEasyFormsBundle(),
+```
+
+And that's it.
