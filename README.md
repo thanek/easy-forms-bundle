@@ -1,5 +1,5 @@
-Form listener for Symfony
-========================
+Easy Forms Bundle for Symfony
+=============================
 
 Easy form handling in Symfony controllers.
 
@@ -28,7 +28,8 @@ See the [`PostController`](Resources/example/Controller/PostController.php) clas
 
 *Note that you need to use the `@Template` annotations in your form-starter controller, because FormListener needs to act before the view is rendered.* 
 
-## Installation
+Installation
+------------
 
 Just add the following line to the `"require"` section in your composer.json file:
 
@@ -50,3 +51,7 @@ new Xis\EasyFormsBundle\XisEasyFormsBundle(),
 
 And that's it.
 
+MIT License
+-----------
+
+The bundle is distributed under the [MIT](http://opensource.org/licenses/MIT) license.
