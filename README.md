@@ -1,7 +1,7 @@
-Form listener for Symfony
-========================
+Easy Forms Bundle for Symfony
+=============================
 
-Easy form handling in Symfony controllers.
+Easy form flow handling in Symfony controllers.
 
 Why?
 
@@ -24,6 +24,34 @@ If the form submission fails, the flow stops at starter method - it will show th
 You can also "decorate" the form-acceptor behavior for failed forms. 
 Use the `rejector` property to point a method which will be executed when form submission fails. This may be useful when you need to show some flash-messages or use some logging.
 
-See the [`PostController`](Resources/example/Controller/PostController.php) class for example how to use those annotations.
+See the [`PostController`](Resources/example/Controller/PostController.php) class for example how to use those annotations. If you want to see how it works, check out the [example symfony-project](https://github.com/thanek/easy-forms-bundle-example) that uses this bundle.
 
 *Note that you need to use the `@Template` annotations in your form-starter controller, because FormListener needs to act before the view is rendered.* 
+
+Installation
+------------
+
+Just add the following line to the `"require"` section in your composer.json file:
+
+```
+    "xis/easy-forms-bundle": "~0.1"
+```
+
+Don't forget to update composer dependencies:
+
+```
+composer.phar update
+```
+
+Then you need to update your `AppKernel.php` file and enable the bundle by adding the folowing entry to the `$bundles` array in `registerBundles` method:
+
+```
+new Xis\EasyFormsBundle\XisEasyFormsBundle(),
+```
+
+And that's it.
+
+MIT License
+-----------
+
+The bundle is distributed under the [MIT](http://opensource.org/licenses/MIT) license.
