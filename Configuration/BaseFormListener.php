@@ -6,6 +6,7 @@ use Doctrine\Common\Util\ClassUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
 class BaseFormListener
@@ -17,9 +18,13 @@ class BaseFormListener
     /** @var Controller */
     protected $controller;
     /** @var string */
-    protected $controllerClassName;
+    protected $controllerName;
+    /** @var string */
+    protected $controllerAsService;
     /** @var string */
     protected $methodName;
+    /** @var Request */
+    protected $request;
 
     /**
      * @param ContainerInterface $container
@@ -36,7 +41,18 @@ class BaseFormListener
     {
         $controller = $event->getController();
         list($this->controller, $this->methodName) = $controller;
-        $this->controllerClassName = ClassUtils::getClass($this->controller);
+        $this->request = $event->getRequest();
+
+        $controllerPath = $this->request->get('_controller');
+        if (preg_match('@\w::\w@', $controllerPath)) {
+            $controllerPath = explode('::', $controllerPath);
+            $this->controllerAsService = false;
+        }
+        else {
+            $controllerPath = explode(':', $controllerPath);
+            $this->controllerAsService = true;
+        }
+        $this->controllerName = $controllerPath[0];
 
         $this->formAnnotations = $this->getFormAnnotations();
     }
@@ -48,7 +64,7 @@ class BaseFormListener
     {
         /** @var $annotationReader Reader */
         $annotationReader = $this->container->get('annotation_reader');
-        $reflectionClass = new \ReflectionClass($this->controllerClassName);
+        $reflectionClass = new \ReflectionClass($this->controller);
 
         $formAnnotations = [];
         $allAnnotations = $annotationReader->getClassAnnotations($reflectionClass);

@@ -59,7 +59,7 @@ class FormStarterListener extends BaseFormListener
     {
         /** @var $annotationReader Reader */
         $annotationReader = $this->container->get('annotation_reader');
-        $reflectionClass = new \ReflectionClass($this->controllerClassName);
+        $reflectionClass = new \ReflectionClass($this->controller);
         $reflectionMethod = $reflectionClass->getMethod($this->methodName);
 
         $formStarterAnnotations = [];

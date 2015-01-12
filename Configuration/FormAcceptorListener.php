@@ -38,7 +38,7 @@ class FormAcceptorListener extends BaseFormListener
     {
         /** @var $annotationReader Reader */
         $annotationReader = $this->container->get('annotation_reader');
-        $reflectionClass = new \ReflectionClass($this->controllerClassName);
+        $reflectionClass = new \ReflectionClass($this->controller);
         $reflectionMethod = $reflectionClass->getMethod($this->methodName);
 
         $allAnnotations = $annotationReader->getMethodAnnotations($reflectionMethod);
@@ -58,14 +58,13 @@ class FormAcceptorListener extends BaseFormListener
      */
     private function executeStarter(FormAcceptor $form, FilterControllerEvent $event)
     {
-        $starterMethod = $form->getStarter();
-        $starterActionName = $this->controllerClassName . '::' . $starterMethod;
+        $starterActionName = $this->getStarterActionName($form);
 
-        $request = $event->getRequest();
-        $request->attributes->set('_controller', $starterActionName);
+        $this->request->attributes->set('_controller', $starterActionName);
 
         $kernel = $event->getKernel();
-        $response = $kernel->handle($request, HttpKernelInterface::SUB_REQUEST);
+        $response = $kernel->handle($this->request, HttpKernelInterface::SUB_REQUEST);
+
         return $response;
     }
 
@@ -76,12 +75,15 @@ class FormAcceptorListener extends BaseFormListener
     protected function processForm(FormAcceptor $formAcceptor, FilterControllerEvent $event)
     {
         $formName = $formAcceptor->getValue();
-        $request = $event->getRequest();
-        $templateParams = $request->attributes->get('_form_starter_templateParams', []);
+        $templateParams = $this->request->attributes->get('_form_starter_templateParams', []);
 
         /** @var FormInterface $form */
-        $form = $request->attributes->get('_form_starter_form_' . $formName);
-        $form->handleRequest($request);
+        $form = $this->request->attributes->get('_form_starter_form_' . $formName);
+        if (!$form) {
+            throw new \LogicException('Form ' . $formName . ' not found');
+        }
+
+        $form->handleRequest($this->request);
         if (!$form->isValid()) {
             $rejector = $formAcceptor->getRejector();
             if (!empty($rejector)) {
@@ -94,8 +96,28 @@ class FormAcceptorListener extends BaseFormListener
             });
         } else {
             foreach ($templateParams as $k => $v) {
-                $request->attributes->set($k, $v);
+                $this->request->attributes->set($k, $v);
             }
+        }
+    }
+
+    /**
+     * @param FormAcceptor $form
+     * @return string
+     */
+    private function getStarterActionName(FormAcceptor $form)
+    {
+        $starterMethod = $form->getStarter();
+        if (empty($starterMethod)) {
+            throw new \InvalidArgumentException('You should add "starter" property in @FormAcceptor annotation.');
+        }
+
+        if ($this->controllerAsService) {
+            $starterActionName = $this->controllerName . ':' . $starterMethod;
+            return $starterActionName;
+        } else {
+            $starterActionName = $this->controllerName . '::' . $starterMethod;
+            return $starterActionName;
         }
     }
 }
