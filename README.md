@@ -18,11 +18,14 @@ With this annotation you can list all the forms used in current controller. The 
 Now, you can annotate methods which "starts" form-flow with the `@FormStarter` and the methods which accepts form submission using the `@FormAcceptor` annotation.
 
 The FormListener will handle the flow, it will create the form and inject it into the template parameters in form-starter methods, so you don't have to do it manually.
-Also, it will handle the acceptor; bind and validate the form. Note that the form-acceptor method is executed only if the form is valid, so the only thing you need to do in your form-acceptor method is to persist you fresh created/updated entity.
+Also, it will handle the acceptor; bind and validate the form. Note that the form-acceptor method is executed only if the form is valid, so the only thing you need to do in your form-acceptor method is to persist your fresh created/updated entity.
+
 If the form submission fails, the flow stops at starter method - it will show the bound form with error message.
 
 You can also "decorate" the form-acceptor behavior for failed forms. 
 Use the `rejector` property to point a method which will be executed when form submission fails. This may be useful when you need to show some flash-messages or use some logging.
+
+You may want to access the form in the form-acceptor method. To do this, use the `param` property of `@FormAcceptor` annotation and then, the form will be passed as the input parameter of form-acceptor method.
 
 See the [`PostController`](Resources/example/Controller/PostController.php) class for example how to use those annotations. If you want to see how it works, check out the [example symfony-project](https://github.com/thanek/easy-forms-bundle-example) that uses this bundle.
 
@@ -34,7 +37,7 @@ Installation
 Just add the following line to the `"require"` section in your composer.json file:
 
 ```
-    "xis/easy-forms-bundle": "~0.1"
+"xis/easy-forms-bundle": "~0.1"
 ```
 
 Don't forget to update composer dependencies:

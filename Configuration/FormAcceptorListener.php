@@ -98,6 +98,9 @@ class FormAcceptorListener extends BaseFormListener
             foreach ($templateParams as $k => $v) {
                 $this->request->attributes->set($k, $v);
             }
+            if (!empty($formAcceptor->getParam())) {
+                $this->request->attributes->set($formAcceptor->getParam(), $form);
+            }
         }
     }
 

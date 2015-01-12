@@ -12,6 +12,8 @@ class FormAcceptor extends Annotation
     protected $starter;
     /** @var string */
     protected $rejector;
+    /** @var string */
+    protected $param;
 
     /**
      * @return string
@@ -35,5 +37,13 @@ class FormAcceptor extends Annotation
     public function getRejector()
     {
         return $this->rejector;
+    }
+
+    /**
+     * @return string
+     */
+    public function getParam()
+    {
+        return $this->param;
     }
 }
